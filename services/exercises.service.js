@@ -1,5 +1,5 @@
 // Gettign the Newly created Mongoose Model we just created 
-var exercise = require('../models/exercise.model')
+var Exercise = require('../models/exercise.model')
 
 // Saving the context of this module inside the _the variable
 _this = this
@@ -16,12 +16,13 @@ exports.getExercises = async function(query, page, limit) {
     // Try Catch the awaited promise to handle the error 
 
     try {
-        var exercises = await exercise.paginate(query, options)
+        var exercises = await Exercise.paginate(query, options)
 
         // Return the todod list that was retured by the mongoose promise
         return exercises;
 
     } catch (e) {
+        console.log(e)
 
         // return a Error message describing the reason 
         throw Error('Error while Paginating exercises')
@@ -29,9 +30,10 @@ exports.getExercises = async function(query, page, limit) {
 }
 
 exports.createExercise = async function(exercise) {
+    console.log(exercise);
 
     // Creating a new Mongoose Object by using the new keyword
-    var newExercise = new exercise({
+    var newExercise = new Exercise({
 
         title: exercise.title,
         description: exercise.description,
@@ -57,19 +59,27 @@ exports.createExercise = async function(exercise) {
         return savedExercise;
     } catch (e) {
 
+        console.log('erreur mongoose')
+        console.log(e)
+
+
         // return a Error message describing the reason     
         throw Error("Error while Creating exercise")
     }
 }
 
 exports.updateExercise = async function(exercise) {
-    var id = exercise.id
+    var id = exercise._id
+    console.log('on est dans l update')
+    console.log('exercice reçu à mettre à jour :')
+    console.log(exercise)
 
     try {
         //Find the old exercise Object by the Id
 
-        var oldExercise = await exercise.findById(id);
+        var oldExercise = await Exercise.findById(id);
     } catch (e) {
+        console.log(e)
         throw Error("Error occured while Finding the Exercise")
     }
 
@@ -77,8 +87,8 @@ exports.updateExercise = async function(exercise) {
     if (!oldExercise) {
         return false;
     }
-
-    console.log(oldexercise)
+    console.log('ancienne valeure :')
+    console.log(oldExercise)
 
     //Edit the exercise Object
     oldExercise.title = exercise.title
@@ -98,10 +108,10 @@ exports.updateExercise = async function(exercise) {
         oldExercise.hidden= exercise.hidden
 
 
-        console.log(oldexercise)
+        console.log(oldExercise)
 
     try {
-        var savedexercise = await oldexercise.save()
+        var savedexercise = await oldExercise.save()
         return savedexercise;
     } catch (e) {
         throw Error("And Error occured while updating the Exercise");
@@ -112,14 +122,15 @@ exports.deleteExercise = async function(id) {
 
     // Delete the exercise
     try {
-        var deleted = await exercise.remove({
+        var deleted = await Exercise.remove({
             _id: id
         })
-        if (deleted.result.n === 0) {
+        if (deleted.n === 0) {
             throw Error("Exercise Could not be deleted")
         }
         return deleted
     } catch (e) {
+        console.log(e);
         throw Error("Error occured while Deleting the Exercise")
     }
 }
