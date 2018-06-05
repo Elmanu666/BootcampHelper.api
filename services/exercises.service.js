@@ -37,11 +37,11 @@ exports.createExercise = async function(exercise) {
 
         title: exercise.title,
         description: exercise.description,
-        type: exercise.type,
+        details: exercise.details,
         media: {
-            img: exercise.img,
-            video: exercise.video,
-            gif: exercise.gif,
+            img: exercise.media.img,
+            video: exercise.media.video,
+            gif: exercise.media.gif,
 
         },
         material: exercise.material,
@@ -97,7 +97,7 @@ exports.updateExercise = async function(exercise) {
 
     oldExercise.title= exercise.title
         oldExercise.description = exercise.description
-        oldExercise.type = exercise.type
+        oldExercise.details = exercise.details
         oldExercise.media = {
             img: exercise.img,
             video: exercise.video,

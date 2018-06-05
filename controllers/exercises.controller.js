@@ -22,7 +22,7 @@ exports.getExercises = async function(req, res, next) {
         console.log(exercises);
 
         // Return the exercises list with the appropriate HTTP Status Code and Message.
-        exercises.total = exercises.total +1;
+        exercises.total = exercises.total;
 
         return res.status(200).json({
             status: 200,
@@ -48,24 +48,27 @@ exports.createExercise = async function(req, res, next) {
 
     console.log(req.body);
 
+    req.body.details ? "" : req.body.details = {"cardio":false, "muscu":false, "balance":false, "bodyPart": [""]};
+    req.body.media ? "" : req.body.media = {"img" : "", "video":"", "gif":""};
+
 
     var exercise = {
-        title: req.body.title,
-        description: req.body.description,
-        type: {
-            cardio: req.body.type.cardio,
-            muscu: req.body.type.muscu,
-            balance: req.body.type.balance,
-            bodyPart: [req.body.type.bodyPart],
+        title: req.body.title ? req.body.title : "default title",
+        description: req.body.description ? req.body.description : "default description",
+        details: {
+            cardio: req.body.details.cardio ? req.body.details.cardio : false,
+            muscu: req.body.details.muscu ? req.body.details.muscu : false,
+            balance: req.body.details.balance ? req.body.details.balance : false,
+            bodyPart: req.body.details.bodyPart ? req.body.details.bodyPart : [""],
         },
         media: {
-            img: req.body.media.img,
-            video: req.body.media.video,
-            gif: req.body.media.gif,
+            img: req.body.media.img ? req.body.media.img :  "",
+            video: req.body.media.video ? req.body.media.video : "",
+            gif: req.body.media.gif ? req.body.media.gif : "",
 
         },
-        material: [req.body.material],
-        hidden: false,
+        material: req.body.material ? req.body.material : [""],
+        hidden: req.body.hidden ? req.body.hidden : false ,
     }
 
     try {
@@ -112,7 +115,7 @@ exports.updateExercise = async function(req, res, next) {
         
         title: req.body.title ? req.body.title : null,
         description: req.body.description ? req.body.description : null,
-        type: {
+        details: {
             cardio: req.body.type.cardio ? req.body.type.cardio : false,
             muscu: req.body.type.muscu ? req.body.type.muscu : false,
             balance: req.body.type.balance ? req.body.type.balance : false,
