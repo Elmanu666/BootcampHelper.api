@@ -48,7 +48,7 @@ exports.createExercise = async function(req, res, next) {
 
     console.log(req.body);
 
-    req.body.details ? "" : req.body.details = {"cardio":false, "muscu":false, "balance":false, "bodyPart": [""]};
+    req.body.details ? "" : req.body.details = {"cardio":false, "muscu":false, "balance":false, "warmUp":false, "bodyPart": [""]};
     req.body.media ? "" : req.body.media = {"img" : "", "video":"", "gif":""};
 
 
@@ -59,6 +59,7 @@ exports.createExercise = async function(req, res, next) {
             cardio: req.body.details.cardio ? req.body.details.cardio : false,
             muscu: req.body.details.muscu ? req.body.details.muscu : false,
             balance: req.body.details.balance ? req.body.details.balance : false,
+            warmUp : req.body.details.warmUp ? req.body.details.warmUp : false,
             bodyPart: req.body.details.bodyPart ? req.body.details.bodyPart : [""],
         },
         media: {
@@ -116,10 +117,11 @@ exports.updateExercise = async function(req, res, next) {
         title: req.body.title ? req.body.title : null,
         description: req.body.description ? req.body.description : null,
         details: {
-            cardio: req.body.type.cardio ? req.body.type.cardio : false,
-            muscu: req.body.type.muscu ? req.body.type.muscu : false,
-            balance: req.body.type.balance ? req.body.type.balance : false,
-            bodyPart: req.body.type.bodyPart ? req.body.type.bodyPart : null,
+            cardio: req.body.details.cardio ? req.body.details.cardio : false,
+            muscu: req.body.details.muscu ? req.body.details.muscu : false,
+            balance: req.body.details.balance ? req.body.details.balance : false,
+            warmUp : req.body.details.warmUp ? req.body.details.warmUp : false,
+            bodyPart: req.body.details.bodyPart ? req.body.details.bodyPart : null,
         },
         media: {
             img: req.body.media.img ? req.body.media.img : null,
@@ -132,7 +134,7 @@ exports.updateExercise = async function(req, res, next) {
     }
 
     console.log('valeur qui vont être mise à jour');
-    console.log()
+    console.log(exercise)
 
     try {
         var updatedexercise = await exerciseService.updateExercise(exercise)

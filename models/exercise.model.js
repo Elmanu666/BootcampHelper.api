@@ -10,6 +10,7 @@ var exerciseSchema = new mongoose.Schema({
     	cardio : Boolean,
     	muscu : Boolean,
     	balance : Boolean,
+        warmUp : Boolean,
     	bodyPart : [String],
     	} ,
     media : {
