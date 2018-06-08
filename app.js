@@ -4,14 +4,21 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var bluebird = require('bluebird')
+var bluebird = require('bluebird');
+var morgan = require('morgan');
+var passport = require('passport');
+
+//var jwt = require('jsonwebtoken');
+
+
 
 var mongoose = require('mongoose');
 
 mongoose.Promise = bluebird
 
 //mongoose.connect('mongodb://127.0.0.1:27017/bootcampHelper', { useMongoClient: true})
-mongoose.connect('mongodb://127.0.0.1:27017/bootcampHelper')
+
+mongoose.connect(process.env.MONGOOSEURL || 'mongodb://127.0.0.1:27017/bootcampHelper')
 .then(()=> { console.log(`Succesfully Connected to the Mongodb Database  at URL : mongodb://127.0.0.1:27017/bootcampHelper`)})
 .catch(()=> { console.log(`Error Connecting to the Mongodb Database at URL : mongodb://127.0.0.1:27017/bootcampHelper`)})
 
@@ -29,7 +36,7 @@ var app = express();
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:4200");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, params");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   next();
 });
@@ -40,6 +47,8 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(passport.initialize());
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -62,6 +71,8 @@ app.use(function(req, res, next) {
   next(err);
 });
 
+
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -72,5 +83,18 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+getToken = function (headers) {
+  if (headers && headers.authorization) {
+    var parted = headers.authorization.split(' ');
+    if (parted.length === 2) {
+      return parted[1];
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+};
 
 module.exports = app;

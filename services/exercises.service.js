@@ -8,15 +8,25 @@ _this = this
 exports.getExercises = async function(query, page, limit) {
 
     // Options setup for the mongoose paginate
+
+    page = parseInt(page, 10)
     var options = {
         page,
         limit
     }
 
+    console.log('affichae de la query')
+    console.log(query);
+    console.log(page);
+    console.log(limit);
+
     // Try Catch the awaited promise to handle the error 
 
     try {
         var exercises = await Exercise.paginate(query, options)
+
+        console.log('retour de mongoose');
+        console.log(exercises);
 
         // Return the todod list that was retured by the mongoose promise
         return exercises;
@@ -37,7 +47,7 @@ exports.createExercise = async function(exercise) {
 
         title: exercise.title,
         description: exercise.description,
-        type: exercise.type,
+        params: exercise.params,
         media: {
             img: exercise.img,
             video: exercise.video,
@@ -95,20 +105,25 @@ exports.updateExercise = async function(exercise) {
     oldExercise.description = exercise.description
 
 
-    oldExercise.title= exercise.title
-        oldExercise.description = exercise.description
-        oldExercise.type = exercise.type
-        oldExercise.media = {
-            img: exercise.img,
-            video: exercise.video,
-            gif: exercise.gif,
+    oldExercise.title = exercise.title
+    oldExercise.description = exercise.description
+    oldExercise.params = {cardio : exercise.params.cardio,
+        muscu : exercise.params.muscu,
+        balance : exercise.params.balance,
+        warmup : exercise.params.warmup,
+        bodyPart : exercise.params.bodyPart,
+        } ,
+    oldExercise.media = {
+        img: exercise.img,
+        video: exercise.video,
+        gif: exercise.gif,
 
-        }
-        oldExercise.material= exercise.material
-        oldExercise.hidden= exercise.hidden
+    }
+    oldExercise.material = exercise.material
+    oldExercise.hidden = exercise.hidden
 
 
-        console.log(oldExercise)
+    console.log(oldExercise)
 
     try {
         var savedexercise = await oldExercise.save()

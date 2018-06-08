@@ -8,6 +8,15 @@ var app = require('../app');
 var debug = require('debug')('bootcampherper.api:server');
 var http = require('http');
 
+if (process.env.NODE_ENV !== 'production') {
+
+  require('dotenv').load();
+}
+
+
+  console.log(process.env.FOO);
+
+
 /**
  * Get port from environment and store in Express.
  */

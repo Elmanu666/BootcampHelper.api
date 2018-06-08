@@ -1,5 +1,5 @@
 // Gettign the Newly created Mongoose Model we just created 
-var session = require('../models/session.model')
+var Session = require('../models/session.model')
 
 // Saving the context of this module inside the _the variable
 _this = this
@@ -30,32 +30,33 @@ exports.getSessions = async function(query, page, limit) {
 
 exports.createSession = async function(session) {
 
+    console.log('on est dans le createSession')
+
     // Creating a new Mongoose Object by using the new keyword
-    var newSession = new session({
+    var newSession = new Session({
 
         title: session.title,
 
 
         plannedDate: session.plannedDate,
         doneDate: session.doneDate,
-        part: [{
-            numbOfExercices: session.numbOfExercices,
-            drillsDuration: session.drillsDuration,
-            restDuration: session.restDuration,
-            repeatNumber: session.repeatNumber,
-            exercises: session.exercises,
-        }]
+        attendees: session.attendees,
+        round: session.round,
+        deleted: false,
+        executed: false,
 
     })
 
     try {
+        console.log('on est dans le try')
 
         // Saving the session 
         var savedSession = await newSession.save()
 
         return savedSession;
     } catch (e) {
-
+        console.log('erreur create session service')
+        console.log(e)
         // return a Error message describing the reason     
         throw Error("Error while Creating session")
     }

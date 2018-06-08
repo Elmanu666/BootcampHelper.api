@@ -46,17 +46,22 @@ exports.createExercise = async function(req, res, next) {
 
     // Req.Body contains the form submit values.
 
-    console.log(req.body);
+    console.log('dans le crearte exercise');
+    console.log(req);
+
+   
+
 
 
     var exercise = {
         title: req.body.title,
         description: req.body.description,
-        type: {
-            cardio: req.body.type.cardio,
-            muscu: req.body.type.muscu,
-            balance: req.body.type.balance,
-            bodyPart: [req.body.type.bodyPart],
+        params: {
+            cardio: req.body.params.cardio,
+            muscu: req.body.params.muscu,
+            balance: req.body.params.balance,
+            warmup: req.body.params.warmup,
+            bodyPart: [req.body.params.bodyPart],
         },
         media: {
             img: req.body.media.img,
@@ -72,7 +77,7 @@ exports.createExercise = async function(req, res, next) {
 
         // Calling the Service function with the new object from the Request Body
 
-        var createdexercise = await exerciseService.createExercise(exercise)
+        var createdexercise = await exerciseService.createExercise(req.body)
         return res.status(201).json({
             status: 201,
             data: createdexercise,
@@ -95,6 +100,7 @@ exports.updateExercise = async function(req, res, next) {
 
     // Id is necessary for the update
     console.log('controller updateExercise')
+    console.log(req.body.params)
     console.log(req.body)
 
     if (!req.body._id) {
@@ -112,11 +118,12 @@ exports.updateExercise = async function(req, res, next) {
         
         title: req.body.title ? req.body.title : null,
         description: req.body.description ? req.body.description : null,
-        type: {
-            cardio: req.body.type.cardio ? req.body.type.cardio : false,
-            muscu: req.body.type.muscu ? req.body.type.muscu : false,
-            balance: req.body.type.balance ? req.body.type.balance : false,
-            bodyPart: req.body.type.bodyPart ? req.body.type.bodyPart : null,
+        params: {
+            cardio: req.body.params.cardio ? req.body.params.cardio : false,
+            muscu: req.body.params.muscu ? req.body.params.muscu : false,
+            balance: req.body.params.balance ? req.body.params.balance : false,
+            warmup: req.body.params.warmup ? req.body.params.warmup : false,
+            bodyPart: req.body.params.bodyPart ? req.body.params.bodyPart : null,
         },
         media: {
             img: req.body.media.img ? req.body.media.img : null,
@@ -136,7 +143,7 @@ exports.updateExercise = async function(req, res, next) {
         return res.status(200).json({
             status: 200,
             data: updatedexercise,
-            message: "Succesfully Updated Tod"
+            message: "Succesfully Updated"
         })
     } catch (e) {
         return res.status(400).json({

@@ -42,18 +42,22 @@ exports.getSessions = async function(req, res, next) {
 
 exports.createSession = async function(req, res, next) {
 
-    // Req.Body contains the form submit values.
 
-    var session = {
-        plannedDate: eq.body.plannedDate,
+    
 
-        part: [{
-            numbOfExercices: req.body.numbOfExercices,
-            drillsDuration: req.body.drillsDuration,
-            restDuration: req.body.restDuration,
-            repeatNumber: req.body.repeatNumber,
-            exercises: req.body.exercises,
-        }]
+    var session1 = {
+
+        description: req.body.description,
+        plannedDate: req.body.plannedDate,
+        executionDate :req.body.executionDate,
+        Status: req.body.Status,
+        attendees : req.body.attendees,
+        plannedDate: req.body.plannedDate,
+        round: req.body.round,
+        deleted: false,
+        executed: false,
+
+        
 
     }
 
@@ -61,7 +65,7 @@ exports.createSession = async function(req, res, next) {
 
         // Calling the Service function with the new object from the Request Body
 
-        var createdSession = await sessionService.createSession(session)
+        var createdSession = await sessionService.createSession(session1)
         return res.status(201).json({
             status: 201,
             data: createdSession,
@@ -73,7 +77,7 @@ exports.createSession = async function(req, res, next) {
 
         return res.status(400).json({
             status: 400,
-            message: "session Creation was Unsuccesfull"
+            message: "session Creation was Unsuccesfull "+e
         })
     }
 }
