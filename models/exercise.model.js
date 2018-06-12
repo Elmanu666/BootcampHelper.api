@@ -6,7 +6,7 @@ var mongoosePaginate = require('mongoose-paginate')
 var exerciseSchema = new mongoose.Schema({
     title: String,
     description: String,
-    params :{ 
+    details :{ 
     	cardio : Boolean,
     	muscu : Boolean,
     	balance : Boolean,

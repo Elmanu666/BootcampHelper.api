@@ -22,7 +22,7 @@ exports.getExercises = async function(req, res, next) {
         console.log(exercises);
 
         // Return the exercises list with the appropriate HTTP Status Code and Message.
-        exercises.total = exercises.total +1;
+        exercises.total = exercises.total;
 
         return res.status(200).json({
             status: 200,
@@ -52,25 +52,28 @@ exports.createExercise = async function(req, res, next) {
    
 
 
+    req.body.details ? "" : req.body.details = {"cardio":false, "muscu":false, "balance":false, "warmUp":false, "bodyPart": [""]};
+    req.body.media ? "" : req.body.media = {"img" : "", "video":"", "gif":""};
+
 
     var exercise = {
         title: req.body.title,
         description: req.body.description,
-        params: {
-            cardio: req.body.params.cardio,
-            muscu: req.body.params.muscu,
-            balance: req.body.params.balance,
-            warmup: req.body.params.warmup,
-            bodyPart: [req.body.params.bodyPart],
+        details: {
+            cardio: req.body.details.cardio,
+            muscu: req.body.details.muscu,
+            balance: req.body.details.balance,
+            warmup: req.body.details.warmup,
+            bodyPart: [req.body.details.bodyPart],
         },
         media: {
-            img: req.body.media.img,
-            video: req.body.media.video,
-            gif: req.body.media.gif,
+            img: req.body.media.img ? req.body.media.img :  "",
+            video: req.body.media.video ? req.body.media.video : "",
+            gif: req.body.media.gif ? req.body.media.gif : "",
 
         },
-        material: [req.body.material],
-        hidden: false,
+        material: req.body.material ? req.body.material : [""],
+        hidden: req.body.hidden ? req.body.hidden : false ,
     }
 
     try {
@@ -118,12 +121,12 @@ exports.updateExercise = async function(req, res, next) {
         
         title: req.body.title ? req.body.title : null,
         description: req.body.description ? req.body.description : null,
-        params: {
-            cardio: req.body.params.cardio ? req.body.params.cardio : false,
-            muscu: req.body.params.muscu ? req.body.params.muscu : false,
-            balance: req.body.params.balance ? req.body.params.balance : false,
-            warmup: req.body.params.warmup ? req.body.params.warmup : false,
-            bodyPart: req.body.params.bodyPart ? req.body.params.bodyPart : null,
+        details: {
+            cardio: req.body.details.cardio ? req.body.details.cardio : false,
+            muscu: req.body.details.muscu ? req.body.details.muscu : false,
+            balance: req.body.details.balance ? req.body.details.balance : false,
+            warmUp : req.body.details.warmUp ? req.body.details.warmUp : false,
+            bodyPart: req.body.details.bodyPart ? req.body.details.bodyPart : null,
         },
         media: {
             img: req.body.media.img ? req.body.media.img : null,
@@ -136,7 +139,7 @@ exports.updateExercise = async function(req, res, next) {
     }
 
     console.log('valeur qui vont être mise à jour');
-    console.log()
+    console.log(exercise)
 
     try {
         var updatedexercise = await exerciseService.updateExercise(exercise)
