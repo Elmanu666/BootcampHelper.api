@@ -103,9 +103,6 @@ exports.updateExercise = async function(exercise) {
     //Edit the exercise Object
     oldExercise.title = exercise.title
     oldExercise.description = exercise.description
-
-
-<<<<<<< HEAD
     oldExercise.title = exercise.title
     oldExercise.description = exercise.description
     oldExercise.details = {cardio : exercise.details.cardio,
