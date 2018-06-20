@@ -9,12 +9,46 @@ _this = this
 
 // Async Controller function to get the To do List
 
+exports.getSession = async function(req, res, next){
+
+        var id = req.params.id;
+        console.log(id);
+
+
+    try {
+
+        var session = await sessionService.getSession(id);
+
+        return res.status(200).json({
+            status: 200,
+            data: session,
+            message: "Succesfully sessions Recieved"
+
+        });
+
+
+    } catch (e)
+
+    {
+
+        return res.status(400).json({
+            status: 400,
+            message: e.message
+        });
+
+
+
+    }
+
+
+}
+
 exports.getSessions = async function(req, res, next) {
 
     // Check the existence of the query parameters, If the exists doesn't exists assign a default value
 
     var page = req.query.page ? req.query.page : 1
-    var limit = req.query.limit ? req.query.limit : 10;
+    var limit = req.query.limit ? req.query.limit : 10
 
     try {
 
@@ -43,7 +77,7 @@ exports.getSessions = async function(req, res, next) {
 exports.createSession = async function(req, res, next) {
 
 
-    
+    console.log(req.body);
 
     var session1 = {
 

@@ -5,6 +5,25 @@ var Session = require('../models/session.model')
 _this = this
 
 // Async function to get the To do List
+
+exports.getSession = async function(id){
+
+    console.log(id);
+
+    try {
+        var session = await Session.findById(id);
+
+        return session;
+
+    }
+
+    catch (e) {
+        throw Error('Error while Paginating sessions')
+
+    }
+
+
+}
 exports.getSessions = async function(query, page, limit) {
 
     // Options setup for the mongoose paginate
@@ -16,7 +35,7 @@ exports.getSessions = async function(query, page, limit) {
     // Try Catch the awaited promise to handle the error 
 
     try {
-        var sessions = await session.paginate(query, options)
+        var sessions = await Session.paginate(query, options)
 
         // Return the todod list that was retured by the mongoose promise
         return sessions;
@@ -35,10 +54,10 @@ exports.createSession = async function(session) {
     // Creating a new Mongoose Object by using the new keyword
     var newSession = new Session({
 
-        title: session.title,
-
-
+        description: session.description,
         plannedDate: session.plannedDate,
+        executionDate : session.executionDate,
+        Status : session.Status,
         doneDate: session.doneDate,
         attendees: session.attendees,
         round: session.round,
