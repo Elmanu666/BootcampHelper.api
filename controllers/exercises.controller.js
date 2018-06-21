@@ -16,7 +16,12 @@ exports.getExercises = async function(req, res, next) {
     var page = req.query.page ? req.query.page : 1
     var limit = req.query.limit ? req.query.limit : 10;
 
-    try {
+    var id = req.params.id ? req.params.id : false;
+
+
+    if (!id){
+
+        try {
 
         var exercises = await exerciseService.getExercises({}, page, limit)
         console.log(exercises);
@@ -30,17 +35,54 @@ exports.getExercises = async function(req, res, next) {
             message: "Succesfully exercises Recieved"
         });
 
-    } catch (e) {
+        } catch (e) {
 
-        //Return an Error Response Message with Code and the Error Message.
+            //Return an Error Response Message with Code and the Error Message.
 
-        return res.status(400).json({
-            status: 400,
-            message: e.message
-        });
+            return res.status(400).json({
+                status: 400,
+                message: e.message
+            });
+
+        }
+    }
+
+    else {
+
+         try {
+
+            var session = await exerciseService.getExercise(id);
+
+            return res.status(200).json({
+                status: 200,
+                data: session,
+                message: "Succesfully exercise Recieved"
+
+            });
+
+
+        } catch (e)
+
+        {
+
+            return res.status(400).json({
+                status: 400,
+                message: e.message
+            });
+
+
+
+        }
+
+
 
     }
+
+    
 }
+
+
+
 
 exports.createExercise = async function(req, res, next) {
 

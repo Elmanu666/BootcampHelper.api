@@ -5,6 +5,30 @@ var Exercise = require('../models/exercise.model')
 _this = this
 
 // Async function to get the To do List
+
+
+exports.getExercise = async function(id){
+
+    console.log(id);
+
+    try {
+        var exercise = await Exercise.findById(id);
+
+        return exercise;
+
+    }
+
+    catch (e) {
+        throw Error('Error while Paginating exercise')
+
+    }
+
+
+}
+
+
+
+
 exports.getExercises = async function(query, page, limit) {
 
     // Options setup for the mongoose paginate
