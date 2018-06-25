@@ -75,6 +75,9 @@ typings/
 # dotenv environment variables file
 .env
 
+#upload foledr
+public/uploads
+
 # next.js build output
 .next
 © 2018 GitHub, Inc.

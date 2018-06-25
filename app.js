@@ -18,7 +18,15 @@ mongoose.Promise = bluebird
 
 //mongoose.connect('mongodb://127.0.0.1:27017/bootcampHelper', { useMongoClient: true})
 
-mongoose.connect('mongodb://192.168.0.10:32768/bootcampHelper')
+
+
+mongoose.connect('mongodb://192.168.0.10:32770/bootcampHelper', { 
+        // sets how many times to try reconnecting
+        reconnectTries: 30,
+        // sets the delay between every retry (milliseconds)
+        reconnectInterval: 1000 
+        } 
+    )
 .then(()=> { console.log(`Succesfully Connected to the Mongodb Database  at URL : mongodb://192.168.0.10:32773/bootcampHelper`)})
 .catch(()=> { console.log(`Error Connecting to the Mongodb Database at URL : mongodb://127.0.0.1:27017/bootcampHelper`)})
 
