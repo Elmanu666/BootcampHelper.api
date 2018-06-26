@@ -76,7 +76,7 @@ typings/
 .env
 
 #upload foledr
-public/uploads
+
 
 # next.js build output
 .next
