@@ -54,19 +54,19 @@ exports.createExercise = async function(req, res, next) {
 
 
     var exercise = {
-        title: req.body.title,
-        description: req.body.description,
+        title: req.body.title ? req.body.title : '',
+        description: req.body.description ? req.body.description : 'Default description',
         params: {
-            cardio: req.body.params.cardio,
-            muscu: req.body.params.muscu,
-            balance: req.body.params.balance,
-            warmup: req.body.params.warmup,
+            cardio: req.body.params.cardio ? req.body.params.cardio : false,
+            muscu: req.body.params.muscu ? req.body.params.muscu : false,
+            balance: req.body.params.balance ? req.body.params.balance : false,
+            warmup: req.body.params.warmup ? req.body.params.warmup :  false,
             bodyPart: [req.body.params.bodyPart],
         },
         media: {
-            img: req.body.media.img,
-            video: req.body.media.video,
-            gif: req.body.media.gif,
+            img: req.body.media.img ? req.body.media.img : '',
+            video: req.body.media.video ? req.body.media.video : '',
+            gif: req.body.media.gif ? req.body.media.gif: '',
 
         },
         material: [req.body.material],

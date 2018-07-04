@@ -39,15 +39,28 @@ exports.getExercises = async function(query, page, limit) {
         limit
     }
 
-    console.log('affichae de la query')
-    console.log(query);
-    console.log(page);
-    console.log(limit);
 
     // Try Catch the awaited promise to handle the error 
 
+    // try {
+    //     var exercises = await Exercise.paginate(query, options)
+
+    //     console.log('retour de mongoose');
+    //     console.log(exercises);
+
+    //     // Return the todod list that was retured by the mongoose promise
+    //     return exercises;
+
+    // } catch (e) {
+    //     console.log(e)
+
+    //     // return a Error message describing the reason 
+    //     throw Error('Error while Paginating exercises')
+    // }
+
+
     try {
-        var exercises = await Exercise.paginate(query, options)
+        var exercises = await Exercise.find()
 
         console.log('retour de mongoose');
         console.log(exercises);

@@ -127,26 +127,29 @@ exports.updateSession = async function(req, res, next) {
         })
     }
 
-    var id = req.body._id;
+    var _id = req.body._id;
 
-    console.log(req.body)
+  
 
     var session = {
-        id,
+        _id,
         plannedDate : req.body.plannedDate ? req.body.plannedDate : null, 
-        doneDate : req.body.doneDate ? req.body.doneDate : null, 
-        part: [{
-            numbOfExercices: req.body.numbOfExercices ? req.body.plannedDate : null,
-            drillsDuration: req.body.drillsDuration ? req.body.drillsDuration : null,
-            restDuration: req.body.restDuration ? req.body.restDuration : null,
-            repeatNumber: req.body.repeatNumber ? req.body.repeatNumber : null,
-            exercises: req.body.exercises ? req.body.exercises : null,
-        }]
+        executionDate :req.body.executionDate ? req.body.executionDate : null, 
+        round: req.body.round ? req.body.round : null,
+
+        description: req.body.description ? req.body.description : 'Default value',
+    
+        Status: req.body.Status ? req.body.Status : null,
+        deleted : req.body.deleted ? req.body.deleted : false,
+        executed : req.body.executed ? req.body.executed : false,
+        attendees : req.body.attendees ? req.body.attendees : false,
+
 
     }
 
+
     try {
-        var updatedSession = await sessionService.updatesession(session)
+        var updatedSession = await sessionService.updateSession(session)
         return res.status(200).json({
             status: 200,
             data: updatedSession,

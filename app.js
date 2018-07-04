@@ -20,7 +20,7 @@ mongoose.Promise = bluebird
 
 
 
-mongoose.connect('mongodb://192.168.0.10:32770/bootcampHelper', { 
+mongoose.connect('mongodb://localhost:27017/bootcampHelper', { 
         // sets how many times to try reconnecting
         reconnectTries: 30,
         // sets the delay between every retry (milliseconds)

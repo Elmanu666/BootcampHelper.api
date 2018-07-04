@@ -82,14 +82,16 @@ exports.createSession = async function(session) {
 }
 
 exports.updateSession = async function(session) {
-    var id = session.id
+    var id = session["_id"];
+
+    console.log('dans le service session, valeur de l id :'+id);
 
     try {
         //Find the old session Object by the Id
 
-        var oldSession = await session.findById(id);
+        var oldSession = await Session.findById(id);
     } catch (e) {
-        throw Error("Error occured while Finding the session")
+        throw Error("Error occured while Finding the session"+e)
     }
 
     // If no old session Object exists return false
@@ -101,11 +103,18 @@ exports.updateSession = async function(session) {
 
     //Edit the session Object
 
-    oldSession.title = session.title
+    oldSession.description = session.description;
 
-    oldSession.plannedDate = session.plannedDate,
-        oldSession.doneDate = session.doneDate,
-        oldSession.part = session.part,
+    oldSession.plannedDate = session.plannedDate
+    oldSession.executionDate = session.executionDate
+    oldSession.Status = session.Status
+    oldSession.deleted = session.eleted
+    oldSession.executed = session.executed
+    oldSession.attendees = session.attendees
+    oldSession.round = session.round
+
+
+   
 
 
 
@@ -115,7 +124,7 @@ exports.updateSession = async function(session) {
         var savedSession = await oldSession.save()
         return savedSession;
     } catch (e) {
-        throw Error("And Error occured while updating the session");
+        throw Error("And Error occured while updating the session "+e);
     }
 }
 
