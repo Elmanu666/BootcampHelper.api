@@ -60,6 +60,10 @@ exports.createFile = async function(req, res, next) {
     upload(req, res, function(err) {
 
 
+        console.log('req file controler');
+        console.log(req);
+
+
         if (err) {
             // An error occurred when uploading
             console.log(err);
@@ -79,7 +83,7 @@ exports.createFile = async function(req, res, next) {
                 FileSize: req.file.size,
                 ImagePath: req.file.path,
                 ThumbPath: '',
-                exerciseId : req.body.ExerciseId,
+                exerciseId : req.body.exerciseId,
                 type: req.body.type,
 
                 
@@ -142,8 +146,8 @@ exports.updateFile = async function(req, res, next) {
         FileSize: req.body.FileSize ? eq.body.FileSize : null,
         ImagePath: req.body.ImagePath ? eq.body.ImagePath : null,
         ThumbPath: req.body.ThumbPath ? eq.body.ThumbPath : null,
-        ProjectId: req.body.ProjectId ? eq.body.ProjectId : null,
-        SectionId: req.body.SectionId ? eq.body.SectionId : null,
+        exerciseId: req.body.exerciseId ? eq.body.exerciseId : null,
+        type: req.body.type ? eq.body.type : null,
     }
 
     console.log('valeur qui vont être mise à jour');

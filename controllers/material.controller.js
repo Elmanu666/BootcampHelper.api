@@ -13,9 +13,9 @@ exports.getMaterials = async function(req, res, next) {
 
     // Check the existence of the query parameters, If the exists doesn't exists assign a default value
 
-    var page = req.query.page ? req.query.page : 1
+    var page = req.query.page ? req.query.page : 1;
     var limit = req.query.limit ? req.query.limit : 10;
-
+    console.log(page);
     try {
 
         var materials = await materialService.getMaterials({}, page, limit)
@@ -40,6 +40,41 @@ exports.getMaterials = async function(req, res, next) {
     }
 }
 
+
+exports.getMaterial = async function (req, res, next){
+
+     var id = req.params.id;
+        console.log(id);
+
+
+    try {
+
+        var material = await materialService.getMaterial(id);
+
+        return res.status(200).json({
+            status: 200,
+            data: material,
+            message: "Succesfully material Recieved"
+
+        });
+
+
+    } catch (e)
+
+    {
+
+        return res.status(400).json({
+            status: 400,
+            message: e.message
+        });
+
+
+
+    }
+
+
+}
+
 exports.createMaterial = async function(req, res, next) {
 
     // Req.Body contains the form submit values.
@@ -51,7 +86,9 @@ exports.createMaterial = async function(req, res, next) {
         weigth: req.body.weigth,
         length: req.body.length,
         strength: req.body.strength,
-        picture: req.body.picture,
+        size: req.body.size,
+        type: req.body.type,
+        quantity: req.body.quantity,
 
     }
 
@@ -71,7 +108,7 @@ exports.createMaterial = async function(req, res, next) {
 
         return res.status(400).json({
             status: 400,
-            message: "material Creation was Unsuccesfull"
+            message: "material Creation was Unsuccesfull :"+e
         })
     }
 }
@@ -94,11 +131,13 @@ exports.updateMaterial = async function(req, res, next) {
     var material = {
         id,
         title: req.body.title ? req.body.title : null,
-        description: req.body.title ? req.body.description : null,
-        weigth: req.body.title ? req.body.weigth : null,
-        length: req.body.title ? req.body.length : null,
-        strength: req.body.title ? req.body.strength : null,
-        picture: req.body.picture ? req.body.picture : null,
+        description: req.body.description ? req.body.description : null,
+        weigth: req.body.weigth ? req.body.weigth : null,
+        length: req.body.length ? req.body.length : null,
+        strength: req.body.strength ? req.body.strength : null,
+        size: req.body.size ? req.body.size : null,
+        type: req.body.type ? req.body.type : null,
+        quantity: req.body.quantity ? req.body.quantity : null,
 
     }
 

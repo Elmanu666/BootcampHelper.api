@@ -8,8 +8,10 @@ var materialSchema = new mongoose.Schema({
     description: String,
     weigth : Number,
     length : Number,
+    size : String,
     strength : String,
-    picture: String
+    type: String,
+    quantity: Number,
 
 })
 

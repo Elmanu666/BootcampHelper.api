@@ -1,5 +1,5 @@
 // Gettign the Newly created Mongoose Model we just created 
-var material = require('../models/material.model')
+var Material = require('../models/material.model')
 
 // Saving the context of this module inside the _the variable
 _this = this
@@ -13,10 +13,12 @@ exports.getMaterials = async function(query, page, limit) {
         limit
     }
 
+    console.log(options);
+
     // Try Catch the awaited promise to handle the error 
 
     try {
-        var materials = await material.paginate(query, options)
+        var materials = await Material.find()
 
         // Return the todod list that was retured by the mongoose promise
         return materials;
@@ -24,20 +26,44 @@ exports.getMaterials = async function(query, page, limit) {
     } catch (e) {
 
         // return a Error message describing the reason 
-        throw Error('Error while Paginating materials')
+        throw Error('Error while Paginating materials :'+e)
     }
+}
+
+exports.getMaterial = async function(id){
+
+    console.log(id);
+
+    try {
+        var material = await Material.findById(id);
+
+        return material;
+
+    }
+
+    catch (e) {
+        throw Error('Error while Paginating sessions')
+
+    }
+
+
+
 }
 
 exports.createMaterial = async function(material) {
 
+    console.log(material);
+
     // Creating a new Mongoose Object by using the new keyword
-    var newMaterial = new material({
+    var newMaterial = new Material({
         title: material.title,
         description: material.description,
         weigth: material.weigth,
         length: material.length,
         strength: material.strength,
-        picture: material.picture
+        size : material.size,
+        type: material.type,
+        quantity: material.quantity
 
 
 
@@ -47,9 +73,14 @@ exports.createMaterial = async function(material) {
 
         // Saving the material 
         var savedMaterial = await newMaterial.save()
+        console.log('dans le save()')
+        console.log(savedMaterial)
 
         return savedMaterial;
     } catch (e) {
+
+        console.log('error :');
+        console.log(e);
 
         // return a Error message describing the reason     
         throw Error("Error while Creating material")
@@ -62,7 +93,7 @@ exports.updateMaterial = async function(material) {
     try {
         //Find the old material Object by the Id
 
-        var oldMaterial = await material.findById(id);
+        var oldMaterial = await Material.findById(id);
     } catch (e) {
         throw Error("Error occured while Finding the material")
     }
@@ -75,12 +106,15 @@ exports.updateMaterial = async function(material) {
     console.log(oldmaterial)
 
     //Edit the material Object
-    oldMaterial.title = material.title
-    oldMaterial.description = material.description
-    oldMaterial.weigth = material.weigth
-    oldMaterial.length = material.length
-    oldMaterial.strength = material.strength
-    oldMaterial.picture = material.picture
+    oldMaterial.title = material.title;
+    oldMaterial.description = material.description;
+    oldMaterial.weigth = material.weigth;
+    oldMaterial.length = material.length;
+    oldMaterial.strength = material.strength;
+    oldMaterial.size = material.size;
+    oldMaterial.type= material.type;
+    oldMaterial.quantity= material.quantity;
+
 
 
     console.log(oldMaterial)
@@ -97,7 +131,7 @@ exports.deleteMaterial = async function(id) {
 
     // Delete the material
     try {
-        var deleted = await material.remove({
+        var deleted = await Material.remove({
             _id: id
         })
         if (deleted.result.n === 0) {

@@ -85,12 +85,14 @@ exports.updateFile = async function(file) {
     console.log(oldFile)
 
     //Edit the File Object
-    oldFile.title = file.title,
-    oldFile.FileSize = file.FileSize ,
-    oldFile.ImagePath = file.ImagePath,
-    oldFile.ThumbPath = file.ThumbPath,
-    oldFile.ProjectId= file.ProjectId,
-    oldFile.SectionId= file.SectionId
+    oldFile.mimeType = file.mimeType,
+    oldFile.originalname = file.originalname ,
+    oldFile.FileName = file.FileName,
+    oldFile.FileSize = file.FileSize,
+    oldFile.ImagePath= file.ImagePath,
+    oldFile.ThumbPath= file.ThumbPath,
+    oldFile.exerciseId= file.exerciseId,
+    oldFile.type= file.type
 
     console.log(oldFile)
 
