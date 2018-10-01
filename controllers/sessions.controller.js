@@ -1,6 +1,7 @@
 // Accessing the Service that we just created
 
 var sessionService = require('../services/sessions.service')
+var dateService = require ('../services/date.service')
 
 // Saving the context of this module inside the _the variable
 
@@ -49,10 +50,31 @@ exports.getSessions = async function(req, res, next) {
 
     var page = req.query.page ? req.query.page : 1
     var limit = req.query.limit ? req.query.limit : 10
+    console.log(req.query);
+
+    var query = {};
+
+
+
+    var qStartDate, qEndDate;
+
+    console.log(new Date (req.query.startDate));
+
+    var date
+
+    
+
+    // req.query.fromDate ? qStarDate = {plannedDate : {$gte : dateService.stringToDate(req.query.fromDate)}} : '';
+    // req.query.toDate ? qEndDate = {plannedDate : {$lte : dateService.stringToDate(req.query.toDate)}} : '';
+    req.query.toDate && req.query.fromDate ? query = {plannedDate : {$gte : dateService.stringToDate(req.query.fromDate), $lte : dateService.stringToDate(req.query.toDate)}} : '';
+//    query = {qStarDate, qEndDate};
+//    query = {qStarDate};
+
+
 
     try {
 
-        var sessions = await sessionService.getSessions({}, page, limit)
+        var sessions = await sessionService.getSessions(query, page, limit)
 
         // Return the sessions list with the appropriate HTTP Status Code and Message.
 

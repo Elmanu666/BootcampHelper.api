@@ -32,6 +32,10 @@ exports.getSessions = async function(query, page, limit) {
         limit
     }
 
+    console.log('query :');
+    console.log(query);
+
+
     // Try Catch the awaited promise to handle the error 
 
     try {
@@ -43,7 +47,7 @@ exports.getSessions = async function(query, page, limit) {
     } catch (e) {
 
         // return a Error message describing the reason 
-        throw Error('Error while Paginating sessions')
+        throw Error('Error while Paginating sessions'+e)
     }
 }
 
