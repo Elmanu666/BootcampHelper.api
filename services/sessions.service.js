@@ -103,7 +103,9 @@ exports.updateSession = async function(session) {
         return false;
     }
 
-    console.log(oldSession)
+    console.log(oldSession);
+    console.log('structure recu');
+    console.log(session);
 
     //Edit the session Object
 
