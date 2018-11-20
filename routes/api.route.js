@@ -16,6 +16,7 @@ router.use('/files', files);
 router.use('/user', user);
 router.use('/materials', material);
 router.use('/material', material);
+router.use('/users', user);
 
 
 module.exports = router;
