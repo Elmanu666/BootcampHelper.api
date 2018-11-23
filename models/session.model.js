@@ -43,7 +43,7 @@ var sessionSchema = new mongoose.Schema({
 		drillsDuration : Number,
 		restDuration : Number,
     	repeat:Number,
-		exercices : [ {
+		exercises : [ {
 						title: String,
 					    description: String,
 					    params : 
