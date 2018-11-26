@@ -40,8 +40,10 @@ var api = require('./routes/api.route')
 
 var app = express();
 
+var corsOrigine = process.env.CORSORIGINE || "http://localhost:4200";
+
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:4200");
+  res.header("Access-Control-Allow-Origin", corsOrigine);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, params");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   next();
