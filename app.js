@@ -10,25 +10,23 @@ var passport = require('passport');
 
 //var jwt = require('jsonwebtoken');
 
-
-
 var mongoose = require('mongoose');
 
-mongoose.Promise = bluebird
+mongoose.Promise = bluebird;
 
-//mongoose.connect('mongodb://127.0.0.1:27017/bootcampHelper', { useMongoClient: true})
+var dbUrl = process.env.MONGOODBURL || 'localhost:27017';
+var mongoodbUrl = 'mongodb://'+dbUrl+'/bootcampHelper';
 
 
-
-mongoose.connect('mongodb://localhost:27017/bootcampHelper', { 
+mongoose.connect(mongoodbUrl, { 
         // sets how many times to try reconnecting
         reconnectTries: 30,
         // sets the delay between every retry (milliseconds)
         reconnectInterval: 1000 
         } 
     )
-.then(()=> { console.log(`Succesfully Connected to the Mongodb Database  at URL : mongodb://192.168.0.10:32773/bootcampHelper`)})
-.catch(()=> { console.log(`Error Connecting to the Mongodb Database at URL : mongodb://127.0.0.1:27017/bootcampHelper`)})
+.then(()=> { console.log('Succesfully Connected to the Mongodb Database  at URL : '+mongoodbUrl)})
+.catch(()=> { console.log('Error Connecting to the Mongodb Database at URL : '+mongoodbUrl)})
 
 
 
