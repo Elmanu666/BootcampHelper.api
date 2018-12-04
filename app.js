@@ -26,7 +26,7 @@ mongoose.connect(mongoodbUrl, {
         } 
     )
 .then(()=> { console.log('Succesfully Connected to the Mongodb Database  at URL : '+mongoodbUrl)})
-.catch(()=> { console.log('Error Connecting to the Mongodb Database at URL : '+mongoodbUrl)})
+.catch((err)=> { console.log('Error Connecting to the Mongodb Database at URL : '+mongoodbUrl , err)})
 
 
 
