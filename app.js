@@ -14,19 +14,66 @@ var mongoose = require('mongoose');
 
 mongoose.Promise = bluebird;
 
-var dbUrl = process.env.MONGOODBURL || 'localhost:27017';
-var mongoodbUrl = 'mongodb://'+dbUrl+'/bootcampHelper';
+
+console.log(process.env.DBPSW);
+console.log(process.env.MONGOODBURL);
+console.log(process.env.DBUSER);
+
+if (process.env.DBPSW && process.env.MONGOODBURL){
+
+  var dbUrl = process.env.MONGOODBURL ;
+  var mongoodbUrl = 'mongodb://'+dbUrl;
 
 
-mongoose.connect(mongoodbUrl, { 
-        // sets how many times to try reconnecting
-        reconnectTries: 30,
-        // sets the delay between every retry (milliseconds)
-        reconnectInterval: 1000 
-        } 
-    )
-.then(()=> { console.log('Succesfully Connected to the Mongodb Database  at URL : '+mongoodbUrl)})
-.catch((err)=> { console.log('Error Connecting to the Mongodb Database at URL : '+mongoodbUrl , err)})
+  mongoose.connect(mongoodbUrl, { 
+          // sets how many times to try reconnecting
+          reconnectTries: 30,
+          // sets the delay between every retry (milliseconds)
+          reconnectInterval: 1000,
+          useNewUrlParser: true, 
+          auth:{
+            user: process.env.DBUSER,
+            password: process.env.DBPSW,
+            dbName:"bootcamphelper"
+
+
+
+            } 
+          },
+
+
+
+      )
+  .then(()=> { console.log('Succesfully Connected to the Mongodb Database  at URL : '+mongoodbUrl)})
+  .catch((err)=> { console.log(mongoodbUrl , err)})
+  mongoose.set('useCreateIndex', true);
+
+
+
+
+}
+
+else{
+
+  var dbUrl = process.env.MONGOODBURL || 'localhost:27017';
+  var mongoodbUrl = 'mongodb://'+dbUrl+'/bootcampHelper';
+
+
+  mongoose.connect(mongoodbUrl, { 
+          // sets how many times to try reconnecting
+          reconnectTries: 30,
+          // sets the delay between every retry (milliseconds)
+          reconnectInterval: 1000,
+          useNewUrlParser: true 
+          } 
+      )
+  .then(()=> { console.log('Succesfully Connected to the Mongodb Database  at URL : '+mongoodbUrl)})
+  .catch((err)=> { console.log(mongoodbUrl , err)})
+  mongoose.set('useCreateIndex', true);
+
+
+} 
+
 
 
 
