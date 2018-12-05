@@ -15,30 +15,50 @@ var mongoose = require('mongoose');
 mongoose.Promise = bluebird;
 
 
-console.log(process.env.DBPSW);
-console.log(process.env.MONGOODBURL);
-console.log(process.env.DBUSER);
+
 
 if (process.env.DBPSW && process.env.MONGOODBURL){
 
   var dbUrl = process.env.MONGOODBURL ;
   var mongoodbUrl = 'mongodb://'+dbUrl;
+  var bdpsw = encodeURIComponent(process.env.DBPSW);
 
 
+  // mongoose.connect(mongoodbUrl, { 
+  //         // sets how many times to try reconnecting
+  //         reconnectTries: 30,
+  //         // sets the delay between every retry (milliseconds)
+  //         reconnectInterval: 1000,
+  //       //  useNewUrlParser: true, 
+  //         auth:{
+  //           user: process.env.DBUSER,
+  //           password: process.env.DBPSW,
+  //           dbName:"bootcamphelper"
+
+
+
+  //           } 
+  //         },
+
+
+
+  //     )
   mongoose.connect(mongoodbUrl, { 
           // sets how many times to try reconnecting
           reconnectTries: 30,
           // sets the delay between every retry (milliseconds)
           reconnectInterval: 1000,
-          useNewUrlParser: true, 
-          auth:{
-            user: process.env.DBUSER,
-            password: process.env.DBPSW,
-            dbName:"bootcamphelper"
+
+
+            auth: {
+              user: process.env.DBUSER,
+              password: process.env.DBPSW,
+              dbName:"bootcamphelper",
+            },
+          useNewUrlParser: false, 
 
 
 
-            } 
           },
 
 
@@ -55,7 +75,7 @@ if (process.env.DBPSW && process.env.MONGOODBURL){
 
 else{
 
-  var dbUrl = process.env.MONGOODBURL || 'localhost:27017';
+  var dbUrl = process.env.MONGOODBURL || '192.168.0.123:27017';
   var mongoodbUrl = 'mongodb://'+dbUrl+'/bootcampHelper';
 
 
