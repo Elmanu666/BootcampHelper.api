@@ -13,11 +13,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();
 }
 
-
-  console.log('foo :'+process.env.FOO);
-  console.log('port :'+process.env.PORT );
-
-
 /**
  * Get port from environment and store in Express.
  */

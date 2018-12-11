@@ -75,7 +75,7 @@ if (process.env.DBPSW && process.env.MONGOODBURL){
 
 else{
 
-  var dbUrl = process.env.MONGOODBURL || '192.168.0.123:27017';
+  var dbUrl = process.env.MONGOODBURL || 'localhost:27017';
   var mongoodbUrl = 'mongodb://'+dbUrl+'/bootcampHelper';
 
 
@@ -107,10 +107,19 @@ var api = require('./routes/api.route')
 
 var app = express();
 
-var corsOrigine = process.env.CORSORIGINE || "http://localhost:4200";
+var allowedOrigins = ['http://localhost:4200'];
+process.env.CORSORIGINE ? allowedOrigins.push(process.env.CORSORIGINE):'';
+process.env.CORSORIGINE2 ? allowedOrigins.push(process.env.CORSORIGINE2):'';
 
+// var corsOrigine = process.env.CORSORIGINE || "http://localhost:4200";
+console.log('allowedOrigins', allowedOrigins);
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", corsOrigine);
+  var origin = req.headers.origin;
+  console.log('origin de la demande', origin)
+  if(allowedOrigins.indexOf(origin) > -1){
+       res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+//  res.header("Access-Control-Allow-Origin", corsOrigine);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, params");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   next();
