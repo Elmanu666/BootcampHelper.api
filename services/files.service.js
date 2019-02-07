@@ -30,7 +30,7 @@ exports.getFiles = async function(query, page, limit) {
 }
 
 exports.createFile = async function(file) {
-    console.log(file);
+ 
 
     // Creating a new Mongoose Object by using the new keyword
     var newFile = new File({
@@ -54,8 +54,7 @@ exports.createFile = async function(file) {
         return savedFile;
     } catch (e) {
 
-        console.log('erreur mongoose')
-        console.log(e)
+
 
 
         // return a Error message describing the reason     
@@ -81,8 +80,7 @@ exports.updateFile = async function(file) {
     if (!oldFile) {
         return false;
     }
-    console.log('ancienne valeure :')
-    console.log(oldFile)
+
 
     //Edit the File Object
     oldFile.mimeType = file.mimeType,

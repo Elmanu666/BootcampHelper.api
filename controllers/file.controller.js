@@ -29,7 +29,7 @@ exports.getFiles = async function(req, res, next) {
     try {
 
         var files = await fileService.getFiles({'exerciseId' : req.query.exerciseId }, page, limit)
-        console.log(files);
+
 
 
         // Return the files list with the appropriate HTTP Status Code and Message.
@@ -60,8 +60,6 @@ exports.createFile = async function(req, res, next) {
     upload(req, res, function(err) {
 
 
-        console.log('req file controler');
-        console.log(req);
 
 
         if (err) {
@@ -96,10 +94,10 @@ exports.createFile = async function(req, res, next) {
 
                 // var createdFile = await fileService.createFile(file)
                 var createdFile = fileService.createFile(fileData)
-                return res.status(201).json({
-                    status: 201,
+                return res.status(200).json({
+                    status: 200,
                     data: createdFile,
-                    message: "Succesfully Created exercise"
+                    message: "Succesfully Created files"
                 })
             } catch (e) {
 
