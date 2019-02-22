@@ -167,7 +167,7 @@ exports.updateExercise = async function(req, res, next) {
             cardio: req.body.details.cardio ? req.body.details.cardio : false,
             muscu: req.body.details.muscu ? req.body.details.muscu : false,
             balance: req.body.details.balance ? req.body.details.balance : false,
-            warmUp : req.body.details.warmUp ? req.body.details.warmUp : false,
+            warmup : req.body.details.warmup ? req.body.details.warmup : false,
             bodyPart: req.body.details.bodyPart ? req.body.details.bodyPart : null,
         },
         media: {
