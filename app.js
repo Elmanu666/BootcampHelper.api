@@ -55,7 +55,8 @@ if (process.env.DBPSW && process.env.MONGOODBURL){
               password: process.env.DBPSW,
               dbName:"bootcamphelper",
             },
-          useNewUrlParser: false, 
+          useNewUrlParser: false,
+
 
 
 
@@ -67,6 +68,7 @@ if (process.env.DBPSW && process.env.MONGOODBURL){
   .then(()=> { console.log('Succesfully Connected to the Mongodb Database  at URL : '+mongoodbUrl)})
   .catch((err)=> { console.log(mongoodbUrl , err)})
   mongoose.set('useCreateIndex', true);
+  mongoose.set('debug', true);
 
 
 
@@ -90,6 +92,7 @@ else{
   .then(()=> { console.log('Succesfully Connected to the Mongodb Database  at URL : '+mongoodbUrl)})
   .catch((err)=> { console.log(mongoodbUrl , err)})
   mongoose.set('useCreateIndex', true);
+  mongoose.set('debug', true);
 
 
 } 

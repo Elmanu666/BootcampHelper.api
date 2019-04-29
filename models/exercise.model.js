@@ -1,9 +1,11 @@
 
 var mongoose = require('mongoose')
-var mongoosePaginate = require('mongoose-paginate')
+var mongoosePaginate = require('mongoose-paginate');
+const Schema = mongoose.Schema;
 
 
-var exerciseSchema = new mongoose.Schema({
+const ExerciseSchema = Schema({
+    _id: Schema.Types.ObjectId,
     title: String,
     description: String,
     details :{ 
@@ -23,7 +25,7 @@ var exerciseSchema = new mongoose.Schema({
     hidden: Boolean,
 })
 
-exerciseSchema.plugin(mongoosePaginate)
-const exercise = mongoose.model('exercise', exerciseSchema)
+ExerciseSchema.plugin(mongoosePaginate)
+const exercise = mongoose.model('Exercise', ExerciseSchema)
 
 module.exports = exercise;

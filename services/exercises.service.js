@@ -117,9 +117,6 @@ exports.createExercise = async function(exercise) {
 
 exports.updateExercise = async function(exercise) {
     var id = exercise._id
-    console.log('on est dans l update')
-    console.log('exercice reçu à mettre à jour :')
-    console.log(exercise)
 
     try {
         //Find the old exercise Object by the Id

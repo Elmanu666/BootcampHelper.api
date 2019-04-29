@@ -2,11 +2,78 @@
 
 var sessionService = require('../services/sessions.service')
 var dateService = require ('../services/date.service')
+var roundServices = require('../services/rounds.service');
+var caloriesBurntServices = require('../services/caloriesBurnts.service');
 
 // Saving the context of this module inside the _the variable
 
 _this = this
 
+
+exports.getRoundId = async function (round){
+
+    var roundIds = new Array();
+
+    for (var i =0 ; i < round.length; i++){
+
+        if (round[i]._id){
+            var m = await roundServices.updateRound(round[i]);
+            roundIds.push(m._id);  
+
+        }
+        else {
+            var m = await roundServices.createRound(round[i]);
+            roundIds.push(m._id);
+
+        }
+
+
+    }
+
+  
+    return roundIds;
+}
+
+
+exports.getCaloriesBurntId = async function (caloriesBurnt){
+
+    var caloriesBurntIds = new Array();
+
+    for (var i =0 ; i < caloriesBurnt.length; i++){
+
+        if (caloriesBurnt[i]._id){
+            var m = await roundServices.updateCaloriesBurnt(caloriesBurnt[i]);
+            caloriesBurntIds.push(m._id);  
+
+        }
+        else {
+            var m = await roundServices.createCaloriesBurnt(caloriesBurnt[i]);
+            caloriesBurntIds.push(m._id);
+
+        }
+
+
+
+    }
+
+  
+    return caloriesBurntIds;
+}
+
+exports.getAttendeesId = async function (data){
+    console.log(data);
+    var attendeesIds = new Array();
+
+    for (var v=0; v<= data.length; v++){
+
+        attendeesIds.push(data._id);
+
+        }
+
+
+
+    return attendeesIds;
+}
 
 // Async Controller function to get the To do List
 
@@ -98,18 +165,33 @@ exports.getSessions = async function(req, res, next) {
 
 exports.createSession = async function(req, res, next) {
 
+    var caloriesBurntId, roundId;
 
-    console.log(req.body);
+//    req.body.caloriesBurntId ?  caloriesBurntId = await exports.getCaloriesBurntId(req.body.caloriesBurntId) : caloriesBurntId = '';
+    req.body.round ?  roundId = await exports.getRoundId(req.body.round) : roundId = '';
+
+  
+
+
+    // if (req.body.attendees){
+    //         var attendeesId = await exports.getAttendeesId(req.body.attendees);
+
+
+    // }
+    // else {var attendeesId = ''};
 
     var session1 = {
 
         description: req.body.description,
         plannedDate: req.body.plannedDate,
         executionDate :req.body.executionDate,
+        executionStart :req.body.executionStart,
+        executionEnd :req.body.executionEnd,
         Status: req.body.Status,
         attendees : req.body.attendees,
         plannedDate: req.body.plannedDate,
-        round: req.body.round,
+        round: roundId,
+        caloriesBurntId : req.body.caloriesBurnt,
         deleted: false,
         executed: false,
 
@@ -141,7 +223,6 @@ exports.createSession = async function(req, res, next) {
 exports.updateSession = async function(req, res, next) {
 
     // Id is necessary for the update
-
     if (!req.body._id) {
         return res.status(400).json({
             status: 400.,
@@ -151,13 +232,25 @@ exports.updateSession = async function(req, res, next) {
 
     var _id = req.body._id;
 
-  
+
+    // if (caloriesBurnt.length >0){
+    //     var caloriesBurntId = await exports.getCaloriesBurntId(req.body.caloriesBurnt);
+    // }
+
+    if (req.body.round.length > 0){
+
+         var roundId = await exports.getRoundId(req.body.round);
+
+
+    }
 
     var session = {
         _id,
         plannedDate : req.body.plannedDate ? req.body.plannedDate : null, 
-        executionDate :req.body.executionDate ? req.body.executionDate : null, 
-        round: req.body.round ? req.body.round : null,
+        executionDate :req.body.executionDate ? req.body.executionDate : null,
+        executionStart :req.body.executionStart ? req.body.executionStart : null,
+        executionEnd :req.body.executionEnd ? req.body.executionEnd : null,
+        round: roundId ? roundId : null,
 
         description: req.body.description ? req.body.description : 'Default value',
     
@@ -165,9 +258,11 @@ exports.updateSession = async function(req, res, next) {
         deleted : req.body.deleted ? req.body.deleted : false,
         executed : req.body.executed ? req.body.executed : false,
         attendees : req.body.attendees ? req.body.attendees : false,
-
+        attendees : req.body.attendees ? req.body.attendees : false,
+        caloriesBurntId : req.body.caloriesBurntId ? req.body.caloriesBurntId : null,
 
     }
+
 
 
     try {
@@ -203,3 +298,4 @@ exports.removeSession = async function(req, res, next) {
     }
 
 }
+

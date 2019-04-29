@@ -8,17 +8,28 @@ _this = this
 
 exports.getSession = async function(id){
 
-    console.log(id);
+    console.log('on passe bien la ou il y aura le populate');
 
     try {
-        var session = await Session.findById(id);
+//        var session = await Session.findById(id);
+        var session = await Session.findById(id)
+        .populate('exercises')
+        .populate('attendees')
+        .populate('caloriesBurntId')
+        .populate({path : 'round', populate : [
+             { path: 'exercisesId' },
+             { path: 'exercisesMainUser' },
+             { path: 'exercisesAlternatives.usersId' },
+             { path: 'exercisesAlternatives.exercisesAltId' }
+         ]});
 
         return session;
 
     }
 
     catch (e) {
-        throw Error('Error while Paginating sessions')
+        console.log('erreur service sessions', e);
+        throw Error(e)
 
     }
 
@@ -29,7 +40,8 @@ exports.getSessions = async function(query, page, limit) {
     // Options setup for the mongoose paginate
     var options = {
         page,
-        limit
+        limit,
+        populate:'attendees'
     }
 
     console.log('query :');
@@ -39,7 +51,7 @@ exports.getSessions = async function(query, page, limit) {
     // Try Catch the awaited promise to handle the error 
 
     try {
-        var sessions = await Session.paginate(query, options)
+        var sessions = await Session.paginate(query, options);
 
         // Return the todod list that was retured by the mongoose promise
         return sessions;
@@ -103,9 +115,6 @@ exports.updateSession = async function(session) {
         return false;
     }
 
-    console.log(oldSession);
-    console.log('structure recu');
-    console.log(session);
 
     //Edit the session Object
 
@@ -113,11 +122,15 @@ exports.updateSession = async function(session) {
 
     oldSession.plannedDate = session.plannedDate
     oldSession.executionDate = session.executionDate
+    oldSession.executionStart = session.executionStart
+    oldSession.executionEnd = session.executionEnd
     oldSession.Status = session.Status
     oldSession.deleted = session.eleted
     oldSession.executed = session.executed
     oldSession.attendees = session.attendees
     oldSession.round = session.round
+    oldSession.caloriesBurntId = session.caloriesBurntId
+
 
 
    
