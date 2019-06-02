@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 
 
 const ExerciseSchema = Schema({
-    _id: Schema.Types.ObjectId,
     title: String,
     description: String,
     details :{ 
@@ -21,7 +20,9 @@ const ExerciseSchema = Schema({
     	gif : String,
 
     },
-    material : [String],
+    material : [{type: Schema.Types.ObjectId, ref: 'material'}],
+    sports : [{type: Schema.Types.ObjectId, ref: 'sport'}],
+    materialType : [{type: Schema.Types.ObjectId, ref: 'materialType'}],
     hidden: Boolean,
 })
 

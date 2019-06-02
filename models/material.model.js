@@ -1,6 +1,6 @@
-
 var mongoose = require('mongoose')
 var mongoosePaginate = require('mongoose-paginate')
+const Schema = mongoose.Schema;
 
 
 var materialSchema = new mongoose.Schema({
@@ -10,7 +10,7 @@ var materialSchema = new mongoose.Schema({
     length : Number,
     size : String,
     strength : String,
-    type: String,
+    type: {type: Schema.Types.ObjectId, ref: 'materialType'},
     quantity: Number,
 
 })

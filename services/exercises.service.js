@@ -9,16 +9,16 @@ _this = this
 
 exports.getExercise = async function(id){
 
-    console.log(id);
 
     try {
-        var exercise = await Exercise.findById(id);
+        var exercise = await Exercise.findById(id).populate('sports').populate('material').populate('materialType');
 
         return exercise;
 
     }
 
     catch (e) {
+        console.log('erreur API get Exericses :'+e)
         throw Error('Error while Paginating exercise')
 
     }
@@ -60,10 +60,7 @@ exports.getExercises = async function(query, page, limit) {
 
 
     try {
-        var exercises = await Exercise.find()
-
-        console.log('retour de mongoose');
-        console.log(exercises);
+        var exercises = await Exercise.find().populate('sports').populate('material').populate('materialType');
 
         // Return the todod list that was retured by the mongoose promise
         return exercises;
@@ -151,7 +148,7 @@ exports.updateExercise = async function(exercise) {
         gif: exercise.gif,
 
     }
-    oldExercise.material = exercise.material
+    oldExercise.materialType = exercise.material
     oldExercise.hidden = exercise.hidden
 
 
@@ -161,7 +158,7 @@ exports.updateExercise = async function(exercise) {
         var savedexercise = await oldExercise.save()
         return savedexercise;
     } catch (e) {
-        throw Error("And Error occured while updating the Exercise");
+        throw Error("And Error occured while updating the Exercise :"+e);
     }
 }
 

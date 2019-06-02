@@ -1,5 +1,6 @@
 // Gettign the Newly created Mongoose Model we just created 
 var Material = require('../models/material.model')
+var MaterialType = require('../models/materialType.model')
 
 // Saving the context of this module inside the _the variable
 _this = this
@@ -18,7 +19,7 @@ exports.getMaterials = async function(query, page, limit) {
     // Try Catch the awaited promise to handle the error 
 
     try {
-        var materials = await Material.find()
+        var materials = await Material.find().populate('type');
 
         // Return the todod list that was retured by the mongoose promise
         return materials;
@@ -35,7 +36,7 @@ exports.getMaterial = async function(id){
     console.log(id);
 
     try {
-        var material = await Material.findById(id);
+        var material = await Material.findById(id).populate('type');
 
         return material;
 

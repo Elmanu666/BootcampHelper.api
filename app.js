@@ -110,6 +110,9 @@ var api = require('./routes/api.route')
 
 var app = express();
 
+//display collections to be removed
+
+
 var allowedOrigins = ['http://localhost:4200'];
 process.env.CORSORIGINE ? allowedOrigins.push(process.env.CORSORIGINE):'';
 process.env.CORSORIGINE2 ? allowedOrigins.push(process.env.CORSORIGINE2):'';

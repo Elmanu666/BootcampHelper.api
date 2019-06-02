@@ -24,7 +24,6 @@ exports.getExercises = async function(req, res, next) {
         try {
 
         var exercises = await exerciseService.getExercises({}, page, limit)
-        console.log(exercises);
 
         // Return the exercises list with the appropriate HTTP Status Code and Message.
         exercises.total = exercises.total;
@@ -122,7 +121,7 @@ exports.createExercise = async function(req, res, next) {
 
         // Calling the Service function with the new object from the Request Body
 
-        var createdexercise = await exerciseService.createExercise(req.body)
+        var createdexercise = await exerciseService.createExercise(exercise)
         return res.status(201).json({
             status: 201,
             data: createdexercise,
@@ -176,7 +175,8 @@ exports.updateExercise = async function(req, res, next) {
             gif: req.body.media.gif ? req.body.media.gif : null,
 
         },
-        material: [req.body.material] ? [req.body.material] : null,
+        materialType: req.body.material ? req.body.material : null,
+        sports: req.body.sports ? req.body.sports : null,
         hidden: false,
     }
 
