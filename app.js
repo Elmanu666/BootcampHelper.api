@@ -15,7 +15,7 @@ var mongoose = require('mongoose');
 mongoose.Promise = bluebird;
 
 
-
+console.log(process.env.MONGOODBURL,process.env.DBUSER,process.env.DBPSW,process.env.mongoodbUrl);
 
 if (process.env.DBPSW && process.env.MONGOODBURL){
 
@@ -54,6 +54,7 @@ if (process.env.DBPSW && process.env.MONGOODBURL){
               user: process.env.DBUSER,
               password: process.env.DBPSW,
               dbName:"bootcamphelper",
+              authSource: "admin", 
             },
           useNewUrlParser: false,
 
