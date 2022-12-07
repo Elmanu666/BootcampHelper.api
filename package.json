@@ -13,7 +13,7 @@
     "debug": "~2.6.9",
     "dotenv": "^6.1.0",
     "ejs": "^2.5.9",
-    "express": "~4.15.5",
+    "express": "~4.17.3",
     "jsonwebtoken": "^8.4.0",
     "mime": "^2.4.0",
     "mongoose": "^5.3.14",
