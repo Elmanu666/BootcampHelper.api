@@ -15,7 +15,7 @@ var mongoose = require('mongoose');
 mongoose.Promise = bluebird;
 
 
-console.log(process.env.MONGOODBURL,process.env.DBUSER,process.env.DBPSW,process.env.mongoodbUrl);
+console.log(process.env.MONGOODBURL,process.env.DBUSER,process.env.DBPSW);
 
 if (process.env.DBPSW && process.env.MONGOODBURL){
 
@@ -67,7 +67,7 @@ if (process.env.DBPSW && process.env.MONGOODBURL){
 
       )
   .then(()=> { console.log('Succesfully Connected to the Mongodb Database  at URL : '+mongoodbUrl)})
-  .catch((err)=> { console.log(mongoodbUrl , err)})
+  .catch((err)=> { console.log('not able to connect');console.log(mongoodbUrl , err)})
   mongoose.set('useCreateIndex', true);
   mongoose.set('debug', true);
 
