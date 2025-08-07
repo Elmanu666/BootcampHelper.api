@@ -4,100 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var bluebird = require('bluebird');
+
 var morgan = require('morgan');
 var passport = require('passport');
 
 //var jwt = require('jsonwebtoken');
 
-var mongoose = require('mongoose');
-
-mongoose.Promise = bluebird;
-
-
-console.log(process.env.MONGOODBURL,process.env.DBUSER,process.env.DBPSW);
-
-if (process.env.DBPSW && process.env.MONGOODBURL){
-
-  var dbUrl = process.env.MONGOODBURL ;
-  var mongoodbUrl = 'mongodb://'+dbUrl;
-  var bdpsw = encodeURIComponent(process.env.DBPSW);
-
-
-  // mongoose.connect(mongoodbUrl, { 
-  //         // sets how many times to try reconnecting
-  //         reconnectTries: 30,
-  //         // sets the delay between every retry (milliseconds)
-  //         reconnectInterval: 1000,
-  //       //  useNewUrlParser: true, 
-  //         auth:{
-  //           user: process.env.DBUSER,
-  //           password: process.env.DBPSW,
-  //           dbName:"bootcamphelper"
-
-
-
-  //           } 
-  //         },
-
-
-
-  //     )
-  mongoose.connect(mongoodbUrl, { 
-          // sets how many times to try reconnecting
-          reconnectTries: 30,
-          // sets the delay between every retry (milliseconds)
-          reconnectInterval: 1000,
-
-
-            auth: {
-              user: process.env.DBUSER,
-              password: process.env.DBPSW,
-              dbName:"bootcamphelper",
-              authSource: "admin", 
-            },
-          useNewUrlParser: false,
-
-
-
-
-          },
-
-
-
-      )
-  .then(()=> { console.log('Succesfully Connected to the Mongodb Database  at URL : '+mongoodbUrl)})
-  .catch((err)=> { console.log('not able to connect');console.log(mongoodbUrl , err)})
-  mongoose.set('useCreateIndex', true);
-  mongoose.set('debug', true);
-
-
-
-
-}
-
-else{
-
-  var dbUrl = process.env.MONGOODBURL || 'localhost:27017';
-  var mongoodbUrl = 'mongodb://'+dbUrl+'/bootcampHelper';
-
-
-  mongoose.connect(mongoodbUrl, { 
-          // sets how many times to try reconnecting
-          reconnectTries: 30,
-          // sets the delay between every retry (milliseconds)
-          reconnectInterval: 1000,
-          useNewUrlParser: true 
-          } 
-      )
-  .then(()=> { console.log('Succesfully Connected to the Mongodb Database  at URL : '+mongoodbUrl)})
-  .catch((err)=> { console.log(mongoodbUrl , err)})
-  mongoose.set('useCreateIndex', true);
-  mongoose.set('debug', true);
-
-
-} 
-
+const { connectDB } = require('./configs/db');
+connectDB();
 
 
 
