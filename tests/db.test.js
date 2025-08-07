@@ -1,23 +1,22 @@
-const assert = require('assert');
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const { connectDB, closeDB } = require('../configs/db');
 
-describe('Database connection', function() {
+describe('Database connection', () => {
   let mongoServer;
 
-  before(async function() {
+  beforeAll(async () => {
     mongoServer = await MongoMemoryServer.create();
     const uri = mongoServer.getUri();
     await connectDB(uri);
   });
 
-  after(async function() {
+  afterAll(async () => {
     await closeDB();
     await mongoServer.stop();
   });
 
-  it('should connect to in-memory database', function() {
-    assert.strictEqual(mongoose.connection.readyState, 1);
+  it('should connect to in-memory database', () => {
+    expect(mongoose.connection.readyState).toBe(1);
   });
 });
